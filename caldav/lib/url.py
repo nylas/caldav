@@ -158,7 +158,11 @@ class URL:
             or
             (path.port and self.port and path.port != self.port)
         ):
-            raise ValueError("%s can't be joined with %s" % (self, path))
+            if path.hostname.endswith('icloud.com') and \
+                self.hostname.endswith('icloud.com'):
+                return path
+            else:
+                raise ValueError("%s can't be joined with %s" % (self, path))
 
         if path.path[0] == '/':
             ret_path = uc2utf8(path.path)
